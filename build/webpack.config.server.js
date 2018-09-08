@@ -3,38 +3,9 @@ const webpack = require('webpack')
 const isDev = process.env.NODE_ENV === 'development'
 const HTMLPlugin = require('html-webpack-plugin')
 const ExtractPlugin = require('extract-text-webpack-plugin')
+const merge = require('webpack-merge')
+const baseConfig = require('./webpack.config.base')
 
-
-const config = {
-    target: 'web',
-    entry: path.join(__dirname, 'src/index.js'),
-    module: {
-        rules: [{
-            test: /\.vue$/,
-            loader: 'vue-loader'
-        }, {
-            test: /\.jsx$/,
-            loader: 'babel-loader'
-        }, {
-            test: /\.(gif|jpg|jpeg|png|svg)$/,
-            use: [{
-                loader: 'url-loader',
-                options: {
-                    limit: 1024,
-                    name: '[name]-hello.[ext]'
-                },
-            }]
-        }]
-    },
-    plugins: [
-        new webpack.DefinePlugin({
-            'process.env': {
-                NODE_ENV: isDev ? '"development"' : '"production"' // 里面一定要用双引号表示字符串
-            }
-        }),
-        new HTMLPlugin()
-    ]
-}
 
 if (isDev) {
     config.module.rules.push({
@@ -58,6 +29,7 @@ if (isDev) {
         overlay: {
             errors: true, // 在浏览器控制台输出 webpack 编译错误信息
         },
+
         hot: true
     };
     config.plugins.push(
@@ -103,6 +75,26 @@ if (isDev) {
         })
     )
 }
+
+const config = merge(baseConfig, {
+    module: {
+        rules: [{
+            test: /\.styl/,
+            use: [
+                'style-loader',
+                'css-loader',
+                {
+                    loader: 'postcss-loader', // 直接使用 stylus-loader 的 source 的 sourceMap
+                    options: {
+                        sourceMap: true,
+                    }
+                },
+                'stylus-loader'
+            ]
+        }]
+    }
+});
+
 
 module.exports = config
 

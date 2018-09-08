@@ -59,3 +59,5 @@ output: {
 
 
 <style> 会通过 vue-style-loader 自行热重载1。
+
+- vue-loader extractCSS 将css 从 vue 文件中分离
