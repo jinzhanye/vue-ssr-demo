@@ -8,7 +8,10 @@
     "dev": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.config.client.js",
     "build:client": "cross-env NODE_ENV=production webpack --config build/webpack.config.client.js",
     "build": "npm run clean && npm run build:client",
-    "clean": "rimraf public && rimraf server-build"
+    "clean": "rimraf public && rimraf server-build",
+    "lint": "eslint --ext .js --ext .jsx --ext .vue client/",
+    "lint-fix": "eslint --fix --ext .js --ext .jsx --ext .vue client/",
+    "precommit": "npm run lint"
   },
   "author": "",
   "license": "ISC",
@@ -35,6 +38,16 @@
     "stylus-loader": "3.0.1",
     "extract-text-webpack-plugin": "3.0.2",
     "webpack-merge": "^4.1.1",
-    "rimraf": "^2.6.2"
+    "rimraf": "^2.6.2",
+    "eslint": "^4.16.0",
+    "eslint-config-standard": "^11.0.0-beta.0",
+    "eslint-loader": "^1.9.0",
+    "eslint-plugin-html": "^4.0.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "babel-eslint": "^8.2.1",
+    "husky": "^0.14.3"
   }
 }

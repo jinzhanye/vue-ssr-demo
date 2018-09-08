@@ -13,14 +13,14 @@ import Footer from './layout/footer.jsx'
 import Todo from './views/todo/todo.vue'
 
 export default {
-    components: {
-        Header,
-        Footer,
-        Todo,
-    },
-    created() {
-        console.log('1111');
-    }
+  components: {
+    Header,
+    Footer,
+    Todo
+  },
+  created () {
+    console.log('1111')
+  }
 }
 </script>
 
