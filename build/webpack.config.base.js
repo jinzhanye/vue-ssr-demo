@@ -5,9 +5,12 @@ const isDev = process.env.NODE_ENV === 'development';
 
 const config = {
   target: 'web',
-  entry: path.join(__dirname, '../client/index.js'),
+  entry: path.join(__dirname, '../client/client-entry.js'),
   output: {
     filename: 'bundle.[hash:8].js',
+    path: path.join(__dirname,'../dist'),
+    // publicPath: "/public/", 不要这样写，因为服务端渲染会访问到客户端的相对路径
+    publicPath: 'http://127.0.0.1:8000/public/'
   },
   module: {
     rules: [{
@@ -22,22 +25,20 @@ const config = {
     }, {
       test: /\.jsx$/,
       loader: 'babel-loader'
-    },
-      //  {   为什么上面 jsx 也会编译 es6 ????
-      //     test: /\.js$/,
-      //     loader: 'babel-loader',
-      //     exclude: /node_modules/
-      // },
-      {
-        test: /\.(gif|jpg|jpeg|png|svg)$/,
-        use: [{
-          loader: 'url-loader',
-          options: {
-            limit: 1024,
-            name: 'resources/[path][name].[hash:8].[ext]' // path 代表图片所有的path
-          },
-        }]
+    }, {
+      test: /\.js$/,
+      loader: 'babel-loader',
+      exclude: /node_modules/
+    }, {
+      test: /\.(gif|jpg|jpeg|png|svg)$/,
+      use: [{
+        loader: 'url-loader',
+        options: {
+          limit: 1024,
+          name: 'resources/[path][name].[hash:8].[ext]' // path 代表图片所有的path
+        },
       }]
+    }]
   }
 };
 

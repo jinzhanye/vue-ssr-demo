@@ -61,3 +61,13 @@ output: {
 <style> 会通过 vue-style-loader 自行热重载1。
 
 - vue-loader extractCSS 将css 从 vue 文件中分离
+
+localIdentName: isDev ? '[path]-[name]-[hash:base64:5]' : '[hash:base64:5]', // base64?????
+
+
+- libraryTarget: 'commonjs2' 表示打包出来的板块以 module.exports = xxx 的形式
+
+
+- externals: Object.keys(require('../package.json').dependencies), ???
+
+- devtool: 'source-map', ssr 为什么用这个 source-map
