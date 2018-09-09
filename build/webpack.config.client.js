@@ -68,7 +68,7 @@ if (isDev) {
         },
         output: {
             filename: '[name].[chunkhash:8].js',
-            path: path.join(__dirname, '../dist')
+            publicPath: '/public/'
         },
         module: {
             rules: [

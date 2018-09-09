@@ -2,13 +2,14 @@ const Router = require('koa-router')
 const path = require('path')
 const fs = require('fs')
 const VueServerRender = require('vue-server-renderer')
-const serverRender = require('./server-render')
-const clientManifest = require('../../public/vue-ssr-client-manifest.json')
 
+const serverRender = require('./server-render')
+
+const clientManifest = require('../../public/vue-ssr-client-manifest.json')
 const renderer = VueServerRender.createBundleRenderer(
   path.join(__dirname, '../../server-build/vue-ssr-server-bundle.json'),
   {
-    inject: false, // Vue SSR 文档有说明，禁止注入官方模版内容
+    inject: false,
     clientManifest
   }
 )
@@ -23,3 +24,5 @@ const pageRouter = new Router()
 pageRouter.get('*', async (ctx) => {
   await serverRender(ctx, renderer, template)
 })
+
+module.exports = pageRouter

@@ -4,6 +4,8 @@ const path = require('path')
 const koaBody = require('koa-body')
 const koaSession = require('koa-session')
 
+const staticRouter = require('./routers/static')
+
 const app = new Koa()
 
 const isDev = process.env.NODE_ENV === 'development'
@@ -31,13 +33,15 @@ app.use(async (ctx, next) => { // 转发 /favicon.ico 请求
   }
 })
 
+
+app.use(staticRouter.routes()).use(staticRouter.allowedMethods())
+
 let pageRouter
-// if (isDev) {
-pageRouter = require('./routers/dev-ssr')
-// }
-// else {
-//   pageRouter = require('./routers/ssr-no-bundle')
-// }
+if (isDev) {
+  pageRouter = require('./routers/dev-ssr')
+} else {
+  pageRouter = require('./routers/ssr')
+}
 
 app.use(pageRouter.routes()).use(pageRouter.allowedMethods())
 

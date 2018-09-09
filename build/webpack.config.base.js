@@ -8,7 +8,7 @@ const config = {
   entry: path.join(__dirname, '../client/client-entry.js'),
   output: {
     filename: 'bundle.[hash:8].js',
-    path: path.join(__dirname,'../dist'),
+    path: path.join(__dirname,'../public'),
     // publicPath: "/public/", 不要这样写，因为服务端渲染会访问到客户端的相对路径
     publicPath: 'http://127.0.0.1:8000/public/'
   },

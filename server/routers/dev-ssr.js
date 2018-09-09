@@ -9,12 +9,12 @@ const VueServerRenderer = require('vue-server-renderer')
 const serverRender = require('./server-render')
 const serverConfig = require('../../build/webpack.config.server')
 
-const serverCompiler = webpack(serverConfig)
+const serverCompiler = webpack(serverConfig) // 执行打包
 const mfs = new MemoryFS()
 serverCompiler.outputFileSystem = mfs
 
 let bundle
-serverCompiler.watch({}, (err, stats) => {
+serverCompiler.watch({}, (err, stats) => { // 监听打包
   if (err) throw err
   stats = stats.toJson()
   // 输出 es-lint 的错误及警告
@@ -23,7 +23,7 @@ serverCompiler.watch({}, (err, stats) => {
 
   const bundlePath = path.join(
     serverConfig.output.path,
-    'vue-ssr-server-bundle.json' // 对应 webpack.config.js 下 plugins.push(new VueServerPlugin()) 生成的默认文件名
+    'vue-ssr-server-bundle.json' // 对应 webpack.config.server.js 下 plugins.push(new VueServerPlugin()) 生成的默认文件名
   )
 
   bundle = JSON.parse(mfs.readFileSync(bundlePath, 'utf-8'))
